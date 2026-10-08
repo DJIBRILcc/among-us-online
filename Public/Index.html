@@ -1,0 +1,69 @@
+html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nebula Deduction - Multijugador Online</title>
+    <link rel="stylesheet" href="css/main.css">
+    <!-- Motor Phaser 3 y Cliente Socket.io -->
+    <script src="https://jsdelivr.net"></script>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div id="game-ui-container">
+        <!-- Menú Principal Comercial -->
+        <div id="main-menu" class="ui-panel">
+            <h1 class="game-title">NEBULA DEDUCTION</h1>
+            <div class="menu-columns">
+                <button class="btn-main" onclick="MenuController.showPanel('online-lobby')">PLAY ONLINE</button>
+                <button class="btn-main" onclick="MenuController.showPanel('stats')">STATS & HISTORY</button>
+                <button class="btn-main" onclick="MenuController.showPanel('help')">HOW TO PLAY</button>
+            </div>
+        </div>
+
+        <!-- Menú de Conexión Multijugador -->
+        <div id="online-lobby" class="ui-panel hidden">
+            <h2>MULTIPLAYER NETWORK</h2>
+            <input type="text" id="player-name-input" placeholder="Introduce tu Nickname..." maxlength="14">
+            <div class="action-box">
+                <button class="btn-action" onclick="NetworkController.createMatch()">CREATE GAME</button>
+                <div class="divider">─ O ─</div>
+                <div class="join-row">
+                    <input type="text" id="room-code-input" placeholder="CÓDIGO DE SALA">
+                    <button class="btn-action" onclick="NetworkController.joinMatchByCode()">JOIN BY CODE</button>
+                </div>
+            </div>
+            <button class="btn-back" onclick="MenuController.showPanel('main-menu')">VOLVER</button>
+        </div>
+
+        <!-- Estadísticas -->
+        <div id="stats" class="ui-panel hidden">
+            <h2>HISTORIAL Y ESTADÍSTICAS</h2>
+            <div class="stats-grid">
+                <div class="stat-card">Partidas Jugadas: <span id="stat-games">0</span></div>
+                <div class="stat-card">Victorias Tripulante: <span id="stat-crew-wins">0</span></div>
+                <div class="stat-card">Victorias Impostor: <span id="stat-imp-wins">0</span></div>
+                <div class="stat-card">Asesinatos Totales: <span id="stat-kills">0</span></div>
+            </div>
+            <button class="btn-back" onclick="MenuController.showPanel('main-menu')">VOLVER</button>
+        </div>
+
+        <!-- Cómo Jugar -->
+        <div id="help" class="ui-panel hidden">
+            <h2>CÓMO JUGAR</h2>
+            <p><strong>Tripulantes:</strong> Completa las misiones en el mapa o reporta los cadáveres para expulsar al Impostor en las votaciones.</p>
+            <p><strong>Impostores:</strong> Sabotea los sistemas y usa las ventilaciones para eliminar a la tripulación en secreto.</p>
+            <button class="btn-back" onclick="MenuController.showPanel('main-menu')">VOLVER</button>
+        </div>
+    </div>
+
+    <!-- Contenedor del Juego 2D -->
+    <div id="phaser-game-canvas"></div>
+
+    <script src="js/net/NetworkClient.js"></script>
+    <script src="js/scenes/MainMenuScene.js"></script>
+    <script src="js/scenes/LobbyScene.js"></script>
+    <script src="js/scenes/GameScene.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
